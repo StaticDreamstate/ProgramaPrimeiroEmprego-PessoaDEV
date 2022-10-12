@@ -12,86 +12,95 @@ Implemente seu código utilizando o playground/compilador online de sua preferen
 Ao finalizar seu código, cole o código aqui ou o link página do playground no campo de resposta abaixo. */
 
 const prompt = require('prompt-sync')();
+const total = 15;
 
 function popularLista(myArr) {
 
     let name, age, birthplace;
     name = prompt("Nome da pessoa: ");
 
-    if (myArr.includes(name) === true) {
-        console.log("Desculpe. Sem nomes repetidos!");
-        return 1;
+    if (!myArr.includes(name)) {
+        age = prompt("Idade da pessoa: ");
+        birthplace = prompt("Nacionalidade da pessoa: ");
+
+        let nObj = {
+            "nome": name,
+            "idade": age,
+            "nacionalidade": birthplace
+        }
+
+        myArr.push(nObj);
     }
 
-    age = prompt("Idade da pessoa: ");
-    birthplace = prompt("Nacionalidade da pessoa: ");
-
-    let nObj = {
-        "nome": name,
-        "idade": age,
-        "nacionalidade": birthplace
-    }
-
-    myArr.push(nObj);
     return 0;
 }
 
-let i;
-let myArr = [];
+function main() {
 
-for (i = 0; i < 15; i++) {
-    if (popularLista(myArr) === 1) { break; }
-}
+    let i;
+    let myArr = [];
 
-const count = {};
-const nacionalidades = myArr.map(a => a.nacionalidade)
-for (i = 0; i < nacionalidades.length; i++) {
-  const element = nacionalidades[i];
+    while (1) {
+        for (i = 0; i < total; i++) { popularLista(myArr) }
 
-  if (count[element]) {
-    count[element] += 1;
-  } else {
-    count[element] = 1;
-  }
-}
+        if (myArr.length != total) {
+            for (i = 0; i < (15 - myArr.length); i++) { popularLista(myArr) }
+        }
 
-console.log("Nacionalidades/Total: ");
+        else { break; }
 
-console.log(count); 
-
-let baby = [];
-let child = [];
-let teen = [];
-let adult = [];
-let elder = []; 
-
-for(i = 0; i < myArr.length; i++) {
-    nObj = {
-        "nome": String(myArr[i].nome),
-        "idade": String(myArr[i].idade)
     }
 
-    if(nObj.idade < 2)
-        baby.push(nObj);
-    if(nObj.idade > 2 && nObj.idade < 14);
-        child.push(nObj);
-    if(nObj.idade > 14 && nObj.idade < 20)
-        teen.push(nObj);
-    if(nObj.idade > 20 && nObj.idade < 55);
-        adult.push(nObj);
-    if(nObj.idade > 55);
-        elder.push(nObj);        
+    const count = {};
+    const nacionalidades = myArr.map(a => a.nacionalidade);
+
+    for (i = 0; i < nacionalidades.length; i++) {
+        const element = nacionalidades[i];
+
+        if (count[element]) {
+            count[element] += 1;
+        } else {
+            count[element] = 1;
+        }
+    }
+
+    console.log("Nacionalidades/Total: ");
+    console.log(count);
+
+    let baby = [];
+    let child = [];
+    let teen = [];
+    let adult = [];
+    let elder = [];
+
+    for (i = 0; i < myArr.length; i++) {
+
+        nObj = {
+            "nome": String(myArr[i].nome),
+            "idade": String(myArr[i].idade)
+        }
+
+        while (1) {
+            if (nObj.idade <= 2) { baby.push(nObj); break; }
+            if (nObj.idade >= 2 && nObj.idade < 14) { child.push(nObj); break; }
+            if (nObj.idade >= 14 && nObj.idade < 20) { teen.push(nObj); break; }
+            if (nObj.idade >= 20 && nObj.idade < 55) { adult.push(nObj); break; }
+            if (nObj.idade >= 55) { elder.push(nObj); break; }
+            
+        }
+
+    }
+
+    console.log("Bebês:");
+    console.log(baby);
+    console.log("Crianças:");
+    console.log(child);
+    console.log("Jovens:");
+    console.log(teen);
+    console.log("Adultos:");
+    console.log(adult);
+    console.log("Idosos:");
+    console.log(elder);
 }
 
-console.log("Bebês:");
-console.log(baby);
-console.log("Crianças:");
-console.log(child);
-console.log("Jovens:");
-console.log(teen);
-console.log("Adultos:");
-console.log(adult);
-console.log("Idosos:");
-console.log(elder);
-
-//Meu horário anda muito corrido e não tive tempo de testar essa. Me desculpem.
+main();
